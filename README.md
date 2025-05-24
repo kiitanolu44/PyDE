@@ -4,7 +4,7 @@ A personal portfolio of Python data engineering projects.
 
 ## Overview
 
-This repository contains a growing collection of standalone projects and code samples that demonstrate my work with Python for data engineering. Each project is organized into its own folder with:
+This repository contains a growing collection of standalone projects and code samples that demonstrate my work with Python for data engineering. Each project is organised into its own folder with:
 
 - Code (scripts, notebooks, modules)  
 - Documentation (README, comments)  
