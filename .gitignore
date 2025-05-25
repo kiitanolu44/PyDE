@@ -1,2 +1,16 @@
 .vscode/
 *.code-workspace
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# IPython checkpoints & caches
+__pycache__/
+.ipynb_checkpoints/
+*.py[cod]
+
+# Other local files
+.mypy_cache/
+.pytest_cache/
+
