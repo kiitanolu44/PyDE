@@ -21,20 +21,16 @@ def my_partial(func: Callable, *preset_args, **preset_kwargs) -> Callable:
     return wrapper
 
 
-my_square = my_partial(pow, exp=2)
+my_square = my_partial(power_of, y=2)
 
 
 def chain_two(a: list, b: list):
     result = []
 
     for x in a:
-        if len(a) == 0:
-            return []
         result.append(x)
 
     for y in b:
-        if len(b) == 0:
-            return []
         result.append(y)
 
     return result
@@ -81,3 +77,9 @@ if __name__ == "__main__":
 
     assert first_upper("Banana") == "BA"
     assert first_upper("Cherry") == "CH"
+
+    expected = ["BA", "CH"]
+    assert result == expected, f"Got {result}, expected {expected}"
+
+# understanding closures better now, partials was not as straight forward though
+# understanding how iteration works under the hood
