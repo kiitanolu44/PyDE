@@ -6,7 +6,7 @@ import importlib
 
 
 def main() -> None:
-    assert my_module.WAS_CALLED == False
+    assert not my_module.WAS_CALLED
 
     assert foo() == "A"
     assert bar() == "B"
