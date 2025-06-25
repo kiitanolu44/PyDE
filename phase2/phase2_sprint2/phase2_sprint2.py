@@ -1,4 +1,4 @@
-from pkg import *
+from pkg import *  # noqa: F403
 import sys
 from PyDE_utils import setup_logging
 import phase2.phase2_sprint1.pkg.a as m
