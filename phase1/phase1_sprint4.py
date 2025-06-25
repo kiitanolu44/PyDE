@@ -6,7 +6,7 @@ from functools import wraps
 from functools import lru_cache
 from time import perf_counter_ns
 
-from PyDE_utils import setup_logging
+from utils.PyDE_utils import setup_logging
 
 logger = logging.getLogger(__name__)
 
