@@ -1,10 +1,25 @@
-import importlib
 import importlib.abc
 import importlib.metadata
 import importlib.util
 from importlib.machinery import PathFinder
 import sys
 import zipimport
+
+
+class HookLoader(importlib.abc.Loader):
+    def exec_module(self, module):
+        module.X = 999
+
+
+class HookFinder(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path, target=None):
+        if fullname != "hook_mod":
+            return None
+
+        return importlib.util.spec_from_loader("hook_mod", HookLoader())
+
+
+sys.meta_path.insert(0, HookFinder())
 
 
 def main() -> None:
@@ -52,7 +67,15 @@ def main() -> None:
     assert "bundle.zip" in zmodule.__file__, "Module wasn’t loaded from the ZIP"
 
     # 4
+    import hook_mod
+
+    assert hook_mod.X == 999, "Custom import hook failed to set X correctly"
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
+# reflection
+# wow this sprint was really a struggle for me, it spanned dynamic imports module systems and even basic api design
+# i can see myself using what i learned here in data pipelines where i might need to leverage variable imports from modules that might change dynamically
+# it was a great learning experience but blimey im happy to move on!
