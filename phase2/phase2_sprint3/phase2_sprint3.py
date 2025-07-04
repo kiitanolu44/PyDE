@@ -1,10 +1,10 @@
 import importlib
+import importlib.abc
 import importlib.metadata
 import importlib.util
 from importlib.machinery import PathFinder
 import sys
-# from pprint import pprint
-from zipimport import zipimporter
+import zipimport
 
 def main() -> None:
     # 1
@@ -35,9 +35,28 @@ def main() -> None:
 
     assert func() == "Hello CLI"
 
+
     # 3
 
-    zmod = zipimporter("bundle.zip")
+    zip_loader = zipimport.zipimporter("bundle.zip")
+
+    # load_module method due to be deprecated so to future proof i pivoted to exec_module
+    # zmod = zipimport.zipimporter.load_module("zmod")
+
+    zip_spec = importlib.util.spec_from_loader("zmod", zip_loader)
+
+    zmodule = importlib.util.module_from_spec(zip_spec)
+    
+    zip_spec.loader.exec_module(zmodule)
+
+    assert zmodule.VALUE == 123
+    assert "bundle.zip" in zmodule.__file__, "Module wasn’t loaded from the ZIP"
+
+
+    # 4
+
+
+
     
 
 if __name__ == "__main__":
