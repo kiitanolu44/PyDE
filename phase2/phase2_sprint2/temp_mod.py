@@ -1,2 +1,2 @@
 def func() -> None:
-    return 'v2'
+    return "v2"

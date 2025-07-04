@@ -4,7 +4,7 @@ WAS_CALLED = False
 
 
 def hello() -> None:
-    global WAS_CALLED 
+    global WAS_CALLED
     WAS_CALLED = True
     print("Hello, Modules!")
 

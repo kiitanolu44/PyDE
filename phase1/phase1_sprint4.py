@@ -10,6 +10,7 @@ from utils.PyDE_utils import setup_logging
 
 logger = logging.getLogger(__name__)
 
+
 def gen_squares_div4(val: int):
     for i in range(val):
         if i % 4 == 0:
@@ -30,16 +31,18 @@ def greet(name):
     """say hello"""
     return f"Hi {name}"
 
+
 @lru_cache(maxsize=None)
 def fibonacci(n: int) -> int:
     if n < 2:
         return n
     return fibonacci(n - 1) + fibonacci(n - 2)
 
+
 def main() -> None:
     setup_logging()
     logger = logging.getLogger(__name__)
-    
+
     logger.info("running script")
     gen_exp = (i**2 for i in range(20) if i % 4 == 0)
     assert next(gen_exp) == 0
@@ -71,7 +74,7 @@ def main() -> None:
 
     logger.info("fib 1 call is %d nanoseconds, fib 2 call is %d nanoseconds", fib_1_duration, fib_2_duration)
 
-    assert fib_2_duration < 0.1 * fib_1_duration 
+    assert fib_2_duration < 0.1 * fib_1_duration
 
 
 if __name__ == "__main__":
