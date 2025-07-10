@@ -1,4 +1,3 @@
-
 import subprocess
 import pathlib
 import sys
@@ -11,23 +10,19 @@ project_root = script_path.parent
 project_root_str = str(project_root)
 
 
-
-
 def main() -> None:
-
     subprocess.run(
-    [
-        sys.executable,
-        "-m",
-        "build",
-        "--wheel",
-        "--outdir",
-        "dist",
-    ],
-    cwd=project_root_str,
-    check=True,
+        [
+            sys.executable,
+            "-m",
+            "build",
+            "--wheel",
+            "--outdir",
+            "dist",
+        ],
+        cwd=project_root_str,
+        check=True,
     )
-
 
     # 1
 
@@ -35,9 +30,8 @@ def main() -> None:
 
     with ZipFile(wheel_files[0], "r") as zip:
         zip_list = zip.namelist()
-    
-    assert "pkg/__init__.py" in zip_list
 
+    assert "pkg/__init__.py" in zip_list
 
     # 2 & 3
 
@@ -48,13 +42,12 @@ def main() -> None:
     assert foo() == "A"
 
     # used this to discover my package
-    # dists = list(importlib.metadata.distributions()) 
+    # dists = list(importlib.metadata.distributions())
 
     # for dist in dists:
     #     print(" -", dist.metadata["Name"], dist.version)
 
     # from importlib.metadata import distributions
-
 
     # dist_dir = os.path.join(project_root, "dist")
 
@@ -84,6 +77,7 @@ def main() -> None:
         raise RuntimeError("echo entry point not found")
 
     assert func() == "A"
+
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -67,7 +67,7 @@ def main() -> None:
     assert "bundle.zip" in zmodule.__file__, "Module wasn’t loaded from the ZIP"
 
     # 4
-    import hook_mod # type: ignore
+    import hook_mod  # type: ignore
 
     assert hook_mod.X == 999, "Custom import hook failed to set X correctly"
 
