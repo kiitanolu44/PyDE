@@ -20,7 +20,7 @@ def main() -> None:
 
     # 2
 
-    import pkg
+    import pkg # type: ignore
 
     assert pkg.__version__ == "0.1.0"
 
@@ -47,7 +47,9 @@ def main() -> None:
 
     # 4
 
-    
+    assert sys.prefix != sys.base_prefix, "The venv is not active"
 
 if __name__ == "__main__":
     sys.exit(main())
+
+# the work with os.environ made me actually understand how powerful docker is, especially when trying to ensure standardisation across different working environments
