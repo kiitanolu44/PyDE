@@ -2,6 +2,7 @@ import os
 import logging
 import logging.config
 
+
 def setup_logging(default_level: str = "INFO") -> None:
     """
     DOC-TODO: Docstring
@@ -11,11 +12,7 @@ def setup_logging(default_level: str = "INFO") -> None:
     config = {
         "version": 1,
         "disable_existing_loggers": False,
-        "formatters": {
-            "standard": {
-                "format": "%(asctime)s:%(levelname)s: %(message)s"
-            }
-        },
+        "formatters": {"standard": {"format": "%(asctime)s:%(levelname)s: %(message)s"}},
         "handlers": {
             "console": {
                 "class": "logging.StreamHandler",
@@ -24,9 +21,6 @@ def setup_logging(default_level: str = "INFO") -> None:
                 "stream": "ext://sys.stdout",
             }
         },
-        "root": {
-            "handlers": ["console"],
-            "level": level
-        },
+        "root": {"handlers": ["console"], "level": level},
     }
     logging.config.dictConfig(config)
