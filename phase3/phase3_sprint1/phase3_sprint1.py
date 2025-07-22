@@ -3,6 +3,7 @@ import csv
 import json
 import struct
 import contextlib
+import ctypes
 
 
 def main() -> None:
@@ -49,6 +50,34 @@ def main() -> None:
         }
 
     assert merged == expected_dict
+
+    # 3
+
+    val1 = [1, 2, 65535]
+    val2 = [1.5, 2.5, -3.0]
+    tuple_list = list(zip(val1, val2))
+
+    with open("records.bin", "wb") as file:
+
+        for id, value in tuple_list:
+            packed = struct.pack("Hf", id, value)
+            file.write(packed)
+
+    with open("records.bin", "rb") as binary_file:
+        record_size = struct.calcsize("Hf")
+        record_list = []
+        
+        while True:
+            chunk = binary_file.read(record_size)
+
+            if not chunk:
+                break
+
+            record_tup = struct.unpack("Hf", chunk)
+            record_list.append(record_tup)
+
+    
+    assert record_list == tuple_list
 
 
 
