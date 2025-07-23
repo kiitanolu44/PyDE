@@ -1,9 +1,18 @@
+import os
 import sys
 import csv
 import json
 import struct
 import contextlib
-import ctypes
+
+@contextlib.contextmanager
+def cd(path: str):
+    old = os.getcwd()
+    os.chdir(path)
+
+    yield
+
+    os.chdir(old)
 
 
 def main() -> None:
@@ -76,10 +85,24 @@ def main() -> None:
             record_tup = struct.unpack("Hf", chunk)
             record_list.append(record_tup)
 
-    
     assert record_list == tuple_list
 
+    # 4
+
+    current_dir = os.getcwd()
+
+    temp_path = os.path.join(current_dir, "temp_dir")
+    os.makedirs(temp_path, exist_ok=True)
+
+    with cd(temp_path):
+        assert os.getcwd() == temp_path
+
+    assert os.getcwd() == current_dir
+
+    os.rmdir(temp_path)
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
+# really enjoyed working with the structured data a lot more than the binary I/O, i find navigating binary and bytes a little bit confusing
