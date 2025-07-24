@@ -1,6 +1,7 @@
 import sys
 import yaml
 import xml.etree.ElementTree as ET
+import configparser
 
 
 def main() -> None:
@@ -26,6 +27,7 @@ def main() -> None:
     # 2
 
     root = ET.Element("root")
+
     user = ET.SubElement(root, "user", id="1")
     ET.SubElement(user, "name").text = "Alice"
 
@@ -34,8 +36,6 @@ def main() -> None:
 
     user = ET.SubElement(root, "user", id="3")
     ET.SubElement(user, "name").text = "Carol"
-
-    # print(user)
 
     assert root[1][0].text == "Bob"
 
@@ -46,10 +46,34 @@ def main() -> None:
 
     assert user_count == 3
 
-    # assert root[1]
+    # 3
 
+    config = configparser.ConfigParser()
+    config.read("settings.ini")
+    
+    config.set("network", "timeout",  "60")
+    config["cache"] = {"enabled": True}
 
+    with open("settings.ini", "w") as config_file:
+        config.write(config_file)
 
+    config = configparser.ConfigParser()
+    config.read("settings.ini")
+
+    assert int(config["network"]["timeout"]) ==  60
+    assert config["cache"]["enabled"] == "True"
+
+    # breakpoint()
+
+    # cleanup/restoring .ini file to its original
+
+    config.set("network", "timeout", "30")
+
+    if config.has_section("cache"):
+        config.remove_section("cache")
+
+    with open("settings.ini", "w") as clean_config_file:
+        config.write(clean_config_file)
 
 if __name__ == "__main__":
     sys.exit( main())
