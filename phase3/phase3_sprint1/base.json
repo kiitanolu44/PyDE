@@ -1,4 +1,1 @@
-{
-    "threshold": 10,
-    "flags": ["b", "c"]
-}
+{"threshold": 10, "flags": ["a"]}

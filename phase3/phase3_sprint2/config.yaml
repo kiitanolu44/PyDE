@@ -1,0 +1,6 @@
+service:
+  name: emailer
+  retries: 3
+  endpoints:
+    - url: https://api.example.com/send
+    - url: https://api.backup.com/send
