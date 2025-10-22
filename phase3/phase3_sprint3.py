@@ -3,6 +3,22 @@ import sys
 import io
 import logging
 
+class PipelineError(Exception):
+    def __init__(self, *args):
+        super().__init__(*args)
+    
+class DataError(PipelineError):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+class ConfigError(PipelineError):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+def process(data: dict, key) -> None:
+    if key in data or data[key]:
+        pass
+
 def main() -> None:
 
     # 1 
