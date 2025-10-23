@@ -3,44 +3,50 @@ import sys
 import io
 import logging
 
+
 class PipelineError(Exception):
     def __init__(self, *args):
         super().__init__(*args)
-    
+
+
 class DataError(PipelineError):
     def __init__(self, *args):
         super().__init__(*args)
 
+
 class ConfigError(PipelineError):
     def __init__(self, *args):
         super().__init__(*args)
+
 
 def process(data: dict) -> None:
     if isinstance(data, dict) and "value" in data.keys():
         return
     else:
         raise DataError("not a dict")
-    
+
+
 def buggy(n: int) -> float:
-    return 1/(n-1)
+    return 1 / (n - 1)
+
 
 def divide(a, b) -> float:
     assert b != 0
     return a / b
+
 
 def divide_safe(a, b):
     if b == 0:
         raise ValueError("b must not be zero")
     return a / b
 
-def main() -> None:
 
-    # 1 
+def main() -> None:
+    # 1
 
     phase3 = logging.getLogger(__name__)
     phase3.setLevel(logging.DEBUG)
 
-    
     console_capture = io.StringIO()
 
     if not phase3.handlers:
@@ -50,7 +56,7 @@ def main() -> None:
         console_handler.setLevel(logging.INFO)
         file_handler.setLevel(logging.DEBUG)
 
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
         console_handler.setFormatter(formatter)
         file_handler.setFormatter(formatter)
 
@@ -64,7 +70,6 @@ def main() -> None:
             if hasattr(h, "flush"):
                 h.flush()
 
-
     console_contents = console_capture.getvalue()
 
     assert "any one want to feed me?" in console_contents
@@ -74,15 +79,13 @@ def main() -> None:
         lines = file.readlines()
         assert any("i am hungry" in line for line in lines)
         assert any("any one want to feed me?" in line for line in lines)
-    
+
     if os.path.exists("phase3.log"):
         os.remove("phase3.log")
 
     for h in phase3.handlers:
         h.close()
     phase3.handlers.clear()
-
-
 
     # 2
 
@@ -92,18 +95,17 @@ def main() -> None:
         assert isinstance(e, DataError)
 
     # 3
-    
+
     try:
         buggy(1)
     except ZeroDivisionError as e:
         import pdb
+
         if os.getenv("PYDE_POST_MORTEM", "0") == "1":
             pdb.post_mortem(e.__traceback__)
         else:
             print("ZeroDivisionError caught; set PYDE_POST_MORTEM=1 to drop into pdb post-mortem.")
 
-
-    
     # 4
 
     try:
@@ -115,6 +117,7 @@ def main() -> None:
         divide_safe(10, 0)
     except Exception as e:
         assert isinstance(e, ValueError)
-    
+
+
 if __name__ == "__main__":
     sys.exit(main())

@@ -6,8 +6,8 @@ import configparser
 import fcntl
 import threading
 
-def main() -> None:
 
+def main() -> None:
     # 1
 
     yaml_check = {
@@ -23,7 +23,7 @@ def main() -> None:
 
     with open("config.yaml", "r") as file:
         yaml_file = yaml.safe_load(file)
-    
+
     assert yaml_file == yaml_check
 
     # 2
@@ -52,8 +52,8 @@ def main() -> None:
 
     config = configparser.ConfigParser()
     config.read("settings.ini")
-    
-    config.set("network", "timeout",  "60")
+
+    config.set("network", "timeout", "60")
     config["cache"] = {"enabled": True}
 
     with open("settings.ini", "w") as config_file:
@@ -62,7 +62,7 @@ def main() -> None:
     config = configparser.ConfigParser()
     config.read("settings.ini")
 
-    assert int(config["network"]["timeout"]) ==  60
+    assert int(config["network"]["timeout"]) == 60
     assert config["cache"]["enabled"] == "True"
 
     # cleanup/restoring .ini file to its original
@@ -91,7 +91,7 @@ def main() -> None:
         f2 = open("lockfile.txt", "w+")
         try:
             fcntl.flock(f2, flags)
-            lock_failed[0] = False 
+            lock_failed[0] = False
         except BlockingIOError:
             assert True, "working as intended"
             lock_failed[0] = True
@@ -113,6 +113,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    sys.exit( main())
+    sys.exit(main())
 
 # .ini felt the most intuitive and easiest to work with, wheras fcntl task was quite intersting/tricky, little documentation to work with on file locking

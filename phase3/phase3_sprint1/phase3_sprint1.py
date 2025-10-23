@@ -5,6 +5,7 @@ import json
 import struct
 import contextlib
 
+
 @contextlib.contextmanager
 def cd(path: str):
     old = os.getcwd()
@@ -16,7 +17,6 @@ def cd(path: str):
 
 
 def main() -> None:
-
     # 1
 
     with open("data.csv", mode="r") as file, open("out.csv", mode="w") as tempfile:
@@ -32,7 +32,7 @@ def main() -> None:
             writer.writerow(row)
             check.append(row)
             # print(row)
-            
+
         assert check[0].get("Name") == "Alice" and check[0].get("Age") == 31
         assert check[1].get("Name") == "Bob" and check[1].get("Age") == 26
         assert check[2].get("Name") == "Carol" and check[2].get("Age") == 41
@@ -46,7 +46,7 @@ def main() -> None:
         override = json.load(override_file)
 
     merged = base.copy()
-    
+
     for key, value in override.items():
         if key not in merged:
             merged[key] = value
@@ -56,7 +56,7 @@ def main() -> None:
     expected_dict = {
         "threshold": 10,
         "flags": ["a", "b", "c"],
-        }
+    }
 
     assert merged == expected_dict
 
@@ -67,7 +67,6 @@ def main() -> None:
     tuple_list = list(zip(val1, val2))
 
     with open("records.bin", "wb") as file:
-
         for id, value in tuple_list:
             packed = struct.pack("Hf", id, value)
             file.write(packed)
@@ -75,7 +74,7 @@ def main() -> None:
     with open("records.bin", "rb") as binary_file:
         record_size = struct.calcsize("Hf")
         record_list = []
-        
+
         while True:
             chunk = binary_file.read(record_size)
 
