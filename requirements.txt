@@ -89,3 +89,4 @@ nest-asyncio==1.6.0
 numpy==1.26.4
 oauthlib==3.2.2
 ipython==8.32.0
+ruff==0.14.1

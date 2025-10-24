@@ -8,6 +8,7 @@ import contextlib
 
 @contextlib.contextmanager
 def cd(path: str):
+    """this function temporarily changes working dir until the with statement has concluded, then changes it back to what it was originally"""
     old = os.getcwd()
     os.chdir(path)
 
